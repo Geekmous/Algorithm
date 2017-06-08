@@ -1,6 +1,6 @@
 import numpy as np
 
-
+import unittest
 
 
 
@@ -23,6 +23,17 @@ def PCA(a, K = None, epslon = 0.01):
 
     return P.dot(a)
 
+class PCAUnitTest(unittest.TestCase):
+
+    def test_pca(self):
+        data = np.asarray([[-1, -1, 0, 2, 0], [-2, 0, 0, 1, 1]])
+        result = np.asarray([[2.12132034, 0.70710678, 0, -2.12132034, -0.70710678]])
+        r = PCA(data, K = 1)
+        self.assertEqual(r.shape, result.shape)
+        self.assertEqual(len(r.shape), 2)
+        for i in range(r.shape[0]):
+            self.assertLess(abs(result[0, i] - r[0, i]), 1e-6)
+
+
 if __name__ == "__main__":
-    data = np.asarray([[-1, -1, 0, 2, 0], [-2, 0, 0, 1, 1]])
-    print PCA(data, K = 1)
+    unittest.main()
